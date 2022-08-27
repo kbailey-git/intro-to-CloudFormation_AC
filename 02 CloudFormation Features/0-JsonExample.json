@@ -1,0 +1,45 @@
+{
+"AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "",
+    "Metadata": {
+
+    },
+    "Resources": {
+        
+        "microEC2": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {
+                "ImageId": "ami-0568773882d492fc8",
+                "InstanceType": "t2.micro",
+                "SecurityGroupIds" : [{ "Ref" : "SecurityGroup" }],
+                "Tags":[
+                    { "Key": "Name", "Value":  "Name Test" }
+                ]
+        }
+                },
+        
+        "SecurityGroup" : {
+          "Type" : "AWS::EC2::SecurityGroup",
+          "Properties" : {
+            "GroupDescription" : "-",
+            "SecurityGroupIngress" : [ {
+              "IpProtocol": "tcp",
+              "FromPort": 22,
+              "ToPort": 22,
+              "CidrIp" : "0.0.0.0/0"
+            }],
+            "Tags" :  [{ "Key": "Name", "Value":  "Security group cli" }]
+          }
+        }
+        
+    },
+    "Outputs" : {
+        
+        "name" : {
+          "Value" : { "Fn::GetAtt" : [ "microEC2", "PublicIp" ]},
+          "Description" : "Ec2's public ip address"
+          
+        }
+        
+    }
+}
